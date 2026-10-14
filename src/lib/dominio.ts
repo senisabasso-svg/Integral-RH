@@ -139,6 +139,16 @@ export const TIPO_CITA_LABEL: Record<TipoCita, string> = {
   reunion: "Reunión",
 };
 
+export function empresaVisible(proceso: {
+  mostrarEmpresa: boolean;
+  razonSocial: string;
+  sector: string;
+}) {
+  return proceso.mostrarEmpresa
+    ? proceso.razonSocial
+    : `Empresa del sector ${proceso.sector.toLowerCase()} (confidencial)`;
+}
+
 export const SERVICIOS: {
   tipo: TipoSolicitud;
   sigla: string;
