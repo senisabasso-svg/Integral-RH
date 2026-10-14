@@ -1,10 +1,12 @@
-# Integral RH
+# Impulso Humano
 
-Plataforma integral de recursos humanos con tres portales sobre una misma base de datos:
+Plataforma integral de recursos humanos con tres portales sobre una misma base de datos.
+
+**Conectamos talento, impulsamos futuro.**
 
 - **Empresas** (`/empresa`): piden servicios (selección, administración de personal, legal, contabilidad, coaching, psicología y medicina laboral), conversan con el profesional asignado, siguen sus búsquedas, revisan a los candidatos presentados (informe, CV, DISC y razonamiento) y dan su feedback.
 - **Candidatos** (`/candidato`): arman su perfil, suben su CV, se postulan en la bolsa de empleos pública (`/empleos`) y completan las evaluaciones que se les asignan.
-- **Staff de Integral RH** (`/staff`): gestiona empresas, candidatos, procesos de selección (pipeline por etapas), solicitudes de servicio, agenda y equipo.
+- **Staff de Impulso Humano** (`/staff`): gestiona empresas, candidatos, procesos de selección (pipeline por etapas), solicitudes de servicio, agenda y equipo.
 
 Hecho con Next.js 16, TypeScript, Tailwind CSS 4 y SQLite (Drizzle ORM + libSQL).
 

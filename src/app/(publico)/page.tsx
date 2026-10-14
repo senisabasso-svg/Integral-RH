@@ -1,5 +1,5 @@
 import { BotonLink } from "@/components/ui";
-import { SERVICIOS } from "@/lib/dominio";
+import { APP_TAGLINE, SERVICIOS } from "@/lib/dominio";
 
 const DIFERENCIALES = [
   {
@@ -42,8 +42,8 @@ export default function InicioPage() {
       <section className="bg-gradient-to-br from-marca-950 via-marca-900 to-marca-700 text-white">
         <div className="mx-auto grid max-w-6xl gap-12 px-4 py-20 lg:grid-cols-2 lg:items-center">
           <div>
-            <p className="text-sm font-medium tracking-wide text-marca-200 uppercase">
-              Recursos humanos integrales en Uruguay
+            <p className="text-sm font-medium tracking-wide text-acento-300">
+              {APP_TAGLINE}
             </p>
             <h1 className="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl">
               Todo lo que tu empresa necesita para su gente, en un solo lugar

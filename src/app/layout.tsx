@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
-import { APP_NAME } from "@/lib/dominio";
+import { APP_NAME, APP_TAGLINE } from "@/lib/dominio";
 import "./globals.css";
 
 export const metadata: Metadata = {
   title: { default: APP_NAME, template: `%s | ${APP_NAME}` },
-  description:
-    "Soluciones integrales de recursos humanos: selección de personal, consultoría legal, contabilidad, coaching, psicología organizacional y medicina laboral.",
+  description: `${APP_TAGLINE}. Selección de personal, consultoría legal, contabilidad, coaching, psicología organizacional y medicina laboral.`,
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

@@ -18,7 +18,7 @@ export function FormNotas({
   return (
     <form action={accion} className="space-y-4">
       <input type="hidden" name="id" value={id} />
-      <Campo etiqueta="Nota interna" ayuda="Solo la ve el equipo de Integral RH.">
+      <Campo etiqueta="Nota interna" ayuda="Solo la ve el equipo de Impulso Humano.">
         <Textarea name="notaInterna" rows={3} defaultValue={estado?.valores?.notaInterna ?? notaInterna} />
       </Campo>
       <Campo

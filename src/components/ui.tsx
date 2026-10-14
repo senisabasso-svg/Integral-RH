@@ -2,7 +2,14 @@ import Link from "next/link";
 import type { ComponentProps, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-type Variante = "primario" | "secundario" | "peligro" | "fantasma" | "claro" | "contornoClaro";
+type Variante =
+  | "primario"
+  | "secundario"
+  | "peligro"
+  | "fantasma"
+  | "claro"
+  | "contornoClaro"
+  | "acento";
 type Tamano = "sm" | "md";
 
 const VARIANTES: Record<Variante, string> = {
@@ -13,6 +20,7 @@ const VARIANTES: Record<Variante, string> = {
   fantasma: "text-slate-600 hover:bg-slate-100 hover:text-slate-900",
   claro: "bg-white text-marca-900 hover:bg-marca-50",
   contornoClaro: "border border-white/30 text-white hover:bg-white/10",
+  acento: "bg-acento-600 text-white hover:bg-acento-700 disabled:bg-acento-300",
 };
 
 const TAMANOS: Record<Tamano, string> = {

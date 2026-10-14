@@ -1,4 +1,5 @@
-export const APP_NAME = "Integral RH";
+export const APP_NAME = "Impulso Humano";
+export const APP_TAGLINE = "Conectamos talento, impulsamos futuro";
 
 export const ROLES = ["empresa", "candidato", "staff"] as const;
 export type Rol = (typeof ROLES)[number];

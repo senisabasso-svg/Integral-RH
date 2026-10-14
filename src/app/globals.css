@@ -3,15 +3,28 @@
 @theme {
   --font-sans: ui-sans-serif, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 
-  --color-marca-50: #eef4ff;
-  --color-marca-100: #d9e5ff;
-  --color-marca-200: #bcd2ff;
-  --color-marca-300: #8eb5ff;
-  --color-marca-400: #598cff;
-  --color-marca-500: #3464f5;
-  --color-marca-600: #1f47e0;
-  --color-marca-700: #1a37b5;
-  --color-marca-800: #1b318f;
-  --color-marca-900: #1c2e70;
-  --color-marca-950: #141c44;
+  /* Teal / azul oscuro del logo */
+  --color-marca-50: #eef8f9;
+  --color-marca-100: #d5eef1;
+  --color-marca-200: #aedce3;
+  --color-marca-300: #78c2cd;
+  --color-marca-400: #3d9eae;
+  --color-marca-500: #257f91;
+  --color-marca-600: #1f6677;
+  --color-marca-700: #1d5361;
+  --color-marca-800: #1c4551;
+  --color-marca-900: #1a3b45;
+  --color-marca-950: #0d252d;
+
+  /* Naranja del logo */
+  --color-acento-50: #fff4ed;
+  --color-acento-100: #ffe6d4;
+  --color-acento-200: #ffc9a8;
+  --color-acento-300: #ffa370;
+  --color-acento-400: #ff7437;
+  --color-acento-500: #f95311;
+  --color-acento-600: #ea3a07;
+  --color-acento-700: #c22908;
+  --color-acento-800: #9a220f;
+  --color-acento-900: #7c1e10;
 }

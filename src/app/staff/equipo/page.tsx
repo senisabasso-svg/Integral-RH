@@ -29,7 +29,7 @@ export default async function EquipoPage() {
     <>
       <EncabezadoPagina
         titulo="Equipo"
-        descripcion="Profesionales de Integral RH con acceso al sistema."
+        descripcion="Profesionales de Impulso Humano con acceso al sistema."
       />
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-sm lg:col-span-2">
