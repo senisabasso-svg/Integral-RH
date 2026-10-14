@@ -120,6 +120,31 @@ export function EncabezadoPagina({
   );
 }
 
+export function Pestanas({
+  items,
+}: {
+  items: { href: string; texto: string; activo: boolean }[];
+}) {
+  return (
+    <nav className="mb-4 flex flex-wrap gap-1 border-b border-slate-200">
+      {items.map((item) => (
+        <Link
+          key={item.href}
+          href={item.href}
+          className={cn(
+            "-mb-px border-b-2 px-3 py-2 text-sm font-medium",
+            item.activo
+              ? "border-marca-600 text-marca-700"
+              : "border-transparent text-slate-500 hover:text-slate-800",
+          )}
+        >
+          {item.texto}
+        </Link>
+      ))}
+    </nav>
+  );
+}
+
 export function Vacio({ titulo, children }: { titulo: string; children?: ReactNode }) {
   return (
     <div className="rounded-lg border border-dashed border-slate-300 px-6 py-10 text-center">

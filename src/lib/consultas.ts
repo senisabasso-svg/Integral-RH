@@ -1,8 +1,31 @@
-import { desc, inArray } from "drizzle-orm";
+import { and, asc, desc, eq, inArray } from "drizzle-orm";
 import { db } from "@/db";
-import { evaluaciones } from "@/db/schema";
+import { empresas, evaluaciones, usuarios } from "@/db/schema";
 import type { EstadoEvaluacion, TipoEvaluacion } from "@/lib/dominio";
 import type { ResultadoEvaluacion } from "@/lib/evaluaciones/tipos";
+
+export function opcionesEmpresas() {
+  return db
+    .select({ id: empresas.id, nombre: empresas.razonSocial })
+    .from(empresas)
+    .orderBy(asc(empresas.razonSocial));
+}
+
+export function opcionesStaff() {
+  return db
+    .select({ id: usuarios.id, nombre: usuarios.nombre, especialidad: usuarios.especialidad })
+    .from(usuarios)
+    .where(and(eq(usuarios.rol, "staff"), eq(usuarios.activo, true)))
+    .orderBy(asc(usuarios.nombre));
+}
+
+export function opcionesCandidatos() {
+  return db
+    .select({ id: usuarios.id, nombre: usuarios.nombre })
+    .from(usuarios)
+    .where(and(eq(usuarios.rol, "candidato"), eq(usuarios.activo, true)))
+    .orderBy(asc(usuarios.nombre));
+}
 
 export type EvaluacionResumen = {
   id: number;

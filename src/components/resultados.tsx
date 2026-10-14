@@ -96,6 +96,31 @@ export function VistaRazonamiento({ resultado }: { resultado: ResultadoRazonamie
   );
 }
 
+export function ResumenEvaluaciones({
+  evaluaciones,
+}: {
+  evaluaciones: EvaluacionesCandidato | undefined;
+}) {
+  const disc = evaluaciones?.disc;
+  const razonamiento = evaluaciones?.inteligencia;
+  return (
+    <div className="flex flex-wrap gap-1">
+      {disc?.resultado?.tipo === "disc" ? (
+        <Etiqueta tono="verde">DISC: {disc.resultado.principal}</Etiqueta>
+      ) : (
+        disc && <Etiqueta tono="amarillo">DISC pendiente</Etiqueta>
+      )}
+      {razonamiento?.resultado?.tipo === "inteligencia" ? (
+        <Etiqueta tono="verde">
+          Razonamiento: {NIVEL_LABEL[razonamiento.resultado.nivel].toLowerCase()}
+        </Etiqueta>
+      ) : (
+        razonamiento && <Etiqueta tono="amarillo">Razonamiento pendiente</Etiqueta>
+      )}
+    </div>
+  );
+}
+
 export function BloqueEvaluaciones({
   evaluaciones,
   detalle = true,
