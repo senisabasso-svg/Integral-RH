@@ -192,7 +192,7 @@ export default async function ProcesoPage({ params }: { params: Promise<{ id: st
                     )}
                     <form action={moverEtapa} className="mt-3 flex gap-1">
                       <input type="hidden" name="id" value={p.id} />
-                      <Select name="etapa" defaultValue={p.etapa} className="py-1 text-xs">
+                      <Select name="etapa" defaultValue={p.etapa} tamano="sm">
                         {ETAPAS.map((e) => (
                           <option key={e} value={e}>
                             {ETAPA_LABEL[e]}

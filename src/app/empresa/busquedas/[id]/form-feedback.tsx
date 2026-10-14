@@ -35,7 +35,6 @@ export function FormFeedback({
         rows={2}
         placeholder="Comentario para el equipo (opcional)"
         defaultValue={estado?.valores?.comentario ?? comentario}
-        className="min-h-0"
       />
       {estado?.errores?.feedback && <p className="text-xs text-red-600">{estado.errores.feedback}</p>}
       <AvisoFormulario estado={estado?.errores ? { ...estado, error: undefined } : estado} />

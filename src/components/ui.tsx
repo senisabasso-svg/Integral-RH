@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { ComponentProps, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-type Variante = "primario" | "secundario" | "peligro" | "fantasma";
+type Variante = "primario" | "secundario" | "peligro" | "fantasma" | "claro" | "contornoClaro";
 type Tamano = "sm" | "md";
 
 const VARIANTES: Record<Variante, string> = {
@@ -11,6 +11,8 @@ const VARIANTES: Record<Variante, string> = {
     "border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 disabled:text-slate-400",
   peligro: "bg-red-600 text-white hover:bg-red-700 disabled:bg-red-300",
   fantasma: "text-slate-600 hover:bg-slate-100 hover:text-slate-900",
+  claro: "bg-white text-marca-900 hover:bg-marca-50",
+  contornoClaro: "border border-white/30 text-white hover:bg-white/10",
 };
 
 const TAMANOS: Record<Tamano, string> = {
@@ -182,8 +184,17 @@ export function Indicador({
   );
 }
 
-export const inputClases =
-  "w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-marca-500 focus:ring-2 focus:ring-marca-500/20 focus:outline-none disabled:bg-slate-100";
+const CAMPO_BASE =
+  "w-full rounded-lg border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 focus:border-marca-500 focus:ring-2 focus:ring-marca-500/20 focus:outline-none disabled:bg-slate-100";
+
+const CAMPO_TAMANOS: Record<Tamano, string> = {
+  sm: "px-2 py-1 text-xs",
+  md: "px-3 py-2 text-sm",
+};
+
+function campoClases(tamano: Tamano, className?: string) {
+  return cn(CAMPO_BASE, CAMPO_TAMANOS[tamano], className);
+}
 
 export function Campo({
   etiqueta,
@@ -208,16 +219,28 @@ export function Campo({
   );
 }
 
-export function Input({ className, ...props }: ComponentProps<"input">) {
-  return <input className={cn(inputClases, className)} {...props} />;
+export function Input({
+  className,
+  tamano = "md",
+  ...props
+}: ComponentProps<"input"> & { tamano?: Tamano }) {
+  return <input className={campoClases(tamano, className)} {...props} />;
 }
 
-export function Textarea({ className, ...props }: ComponentProps<"textarea">) {
-  return <textarea className={cn(inputClases, "min-h-24", className)} {...props} />;
+export function Textarea({
+  className,
+  tamano = "md",
+  ...props
+}: ComponentProps<"textarea"> & { tamano?: Tamano }) {
+  return <textarea className={campoClases(tamano, className)} {...props} />;
 }
 
-export function Select({ className, ...props }: ComponentProps<"select">) {
-  return <select className={cn(inputClases, className)} {...props} />;
+export function Select({
+  className,
+  tamano = "md",
+  ...props
+}: ComponentProps<"select"> & { tamano?: Tamano }) {
+  return <select className={campoClases(tamano, className)} {...props} />;
 }
 
 export function Aviso({

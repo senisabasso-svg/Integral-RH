@@ -54,14 +54,10 @@ export default function InicioPage() {
               trabajo saludable y productivo.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <BotonLink href="/registro/empresa" className="bg-white text-marca-900 hover:bg-marca-50">
+              <BotonLink href="/registro/empresa" variante="claro">
                 Solicitar un servicio
               </BotonLink>
-              <BotonLink
-                href="/empleos"
-                variante="fantasma"
-                className="border border-white/30 text-white hover:bg-white/10 hover:text-white"
-              >
+              <BotonLink href="/empleos" variante="contornoClaro">
                 Ver empleos
               </BotonLink>
             </div>
