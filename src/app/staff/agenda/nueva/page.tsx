@@ -4,7 +4,7 @@ import { db } from "@/db";
 import { procesos, solicitudes } from "@/db/schema";
 import { requireRol } from "@/lib/auth";
 import { opcionesCandidatos, opcionesEmpresas, opcionesStaff } from "@/lib/consultas";
-import { claveDia } from "@/lib/utils";
+import { claveDiaDesdeHoy } from "@/lib/utils";
 import { FormCita } from "./form-cita";
 
 export const metadata = { title: "Nueva cita" };
@@ -27,7 +27,7 @@ export default async function NuevaCitaPage({
     .from(solicitudes)
     .where(inArray(solicitudes.estado, ["nueva", "en_curso"]))
     .orderBy(asc(solicitudes.asunto));
-  const manana = claveDia(Date.now() + 24 * 60 * 60 * 1000);
+  const manana = claveDiaDesdeHoy(1);
 
   return (
     <>

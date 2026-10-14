@@ -52,6 +52,10 @@ export function claveDia(fecha: Date | number) {
   }).format(fecha);
 }
 
+export function claveDiaDesdeHoy(dias: number) {
+  return claveDia(Date.now() + dias * 24 * 60 * 60 * 1000);
+}
+
 // Uruguay usa UTC-3 todo el año (sin horario de verano desde 2015).
 export function parseFechaHoraLocal(valor: string): Date | null {
   if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(valor)) return null;

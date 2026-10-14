@@ -70,8 +70,15 @@ export const obtenerUsuario = cache(async (): Promise<UsuarioSesion | null> => {
     .where(and(eq(sesiones.id, hashToken(token)), gt(sesiones.expiraEn, new Date())))
     .limit(1);
   if (!fila || !fila.activo) return null;
-  const { activo: _activo, ...usuario } = fila;
-  return usuario;
+  return {
+    id: fila.id,
+    email: fila.email,
+    nombre: fila.nombre,
+    rol: fila.rol,
+    especialidad: fila.especialidad,
+    esAdmin: fila.esAdmin,
+    empresaId: fila.empresaId,
+  };
 });
 
 export async function requireRol<R extends Rol>(rol: R) {
