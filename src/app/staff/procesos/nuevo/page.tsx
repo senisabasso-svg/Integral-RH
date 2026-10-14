@@ -11,16 +11,23 @@ export const metadata = { title: "Nuevo proceso" };
 export default async function NuevoProcesoPage({
   searchParams,
 }: {
-  searchParams: Promise<{ solicitud?: string }>;
+  searchParams: Promise<{ solicitud?: string; empresa?: string }>;
 }) {
   await requireRol("staff");
-  const solicitudId = Number((await searchParams).solicitud) || undefined;
+  const parametros = await searchParams;
+  const solicitudId = Number(parametros.solicitud) || undefined;
   const [solicitud] = solicitudId
     ? await db
-        .select({ id: solicitudes.id, empresaId: solicitudes.empresaId, asunto: solicitudes.asunto, descripcion: solicitudes.descripcion })
+        .select({
+          id: solicitudes.id,
+          empresaId: solicitudes.empresaId,
+          asunto: solicitudes.asunto,
+          descripcion: solicitudes.descripcion,
+        })
         .from(solicitudes)
         .where(eq(solicitudes.id, solicitudId))
     : [];
+  const empresaId = solicitud?.empresaId ?? (Number(parametros.empresa) || undefined);
 
   return (
     <>
@@ -38,7 +45,7 @@ export default async function NuevoProcesoPage({
           empresas={await opcionesEmpresas()}
           staff={await opcionesStaff()}
           solicitudId={solicitud?.id}
-          inicial={solicitud ? { empresaId: solicitud.empresaId, descripcion: solicitud.descripcion } : {}}
+          inicial={{ empresaId, descripcion: solicitud?.descripcion }}
         />
       </Tarjeta>
     </>

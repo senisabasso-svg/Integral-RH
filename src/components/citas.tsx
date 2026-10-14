@@ -29,7 +29,13 @@ export function ListaCitas({ citas, vacio = "No hay citas próximas." }: { citas
   );
 }
 
-export function AgendaPorDia({ citas }: { citas: CitaVista[] }) {
+export function AgendaPorDia({
+  citas,
+  acciones,
+}: {
+  citas: CitaVista[];
+  acciones?: (cita: CitaVista) => React.ReactNode;
+}) {
   if (citas.length === 0) {
     return <Vacio titulo="No hay citas agendadas para los próximos días." />;
   }
@@ -57,7 +63,10 @@ export function AgendaPorDia({ citas }: { citas: CitaVista[] }) {
                   {cita.lugar && <p className="mt-0.5 text-xs text-slate-500">{cita.lugar}</p>}
                   {cita.detalle && <p className="mt-1 text-xs text-slate-500">{cita.detalle}</p>}
                 </div>
-                <Etiqueta>{TIPO_CITA_LABEL[cita.tipo]}</Etiqueta>
+                <div className="flex items-center gap-2">
+                  <Etiqueta>{TIPO_CITA_LABEL[cita.tipo]}</Etiqueta>
+                  {acciones?.(cita)}
+                </div>
               </li>
             ))}
           </ul>

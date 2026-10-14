@@ -20,6 +20,7 @@ export function formatFechaHora(fecha: Date | number) {
     year: "numeric",
     hour: "2-digit",
     minute: "2-digit",
+    hourCycle: "h23",
     timeZone: ZONA_HORARIA,
   }).format(fecha);
 }
@@ -28,6 +29,7 @@ export function formatHora(fecha: Date | number) {
   return new Intl.DateTimeFormat("es-UY", {
     hour: "2-digit",
     minute: "2-digit",
+    hourCycle: "h23",
     timeZone: ZONA_HORARIA,
   }).format(fecha);
 }
