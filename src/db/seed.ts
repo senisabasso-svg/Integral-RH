@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { DIMENSIONES, GRUPOS_DISC, puntuarDisc } from "../lib/evaluaciones/disc";
 import { PREGUNTAS_RAZONAMIENTO, puntuarRazonamiento } from "../lib/evaluaciones/razonamiento";
 import type { Dimension, RespuestasDisc, RespuestasRazonamiento } from "../lib/evaluaciones/tipos";

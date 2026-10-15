@@ -1,5 +1,5 @@
 import { and, asc, eq, gte } from "drizzle-orm";
-import { alias } from "drizzle-orm/sqlite-core";
+import { alias } from "drizzle-orm/pg-core";
 import { AgendaPorDia } from "@/components/citas";
 import { EncabezadoPagina } from "@/components/ui";
 import { db } from "@/db";

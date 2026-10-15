@@ -1,4 +1,14 @@
-import { index, integer, sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core";
+import {
+  boolean,
+  index,
+  integer,
+  jsonb,
+  pgTable,
+  serial,
+  text,
+  timestamp,
+  uniqueIndex,
+} from "drizzle-orm/pg-core";
 import {
   DISPONIBILIDADES,
   ESPECIALIDADES,
@@ -15,7 +25,7 @@ import {
 } from "../lib/dominio";
 import type { ResultadoEvaluacion } from "../lib/evaluaciones/tipos";
 
-const fecha = (nombre: string) => integer(nombre, { mode: "timestamp_ms" });
+const fecha = (nombre: string) => timestamp(nombre, { withTimezone: true, mode: "date" });
 const creadoEn = () =>
   fecha("creado_en")
     .notNull()
@@ -25,8 +35,8 @@ const actualizadoEn = () =>
     .notNull()
     .$defaultFn(() => new Date());
 
-export const empresas = sqliteTable("empresas", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
+export const empresas = pgTable("empresas", {
+  id: serial("id").primaryKey(),
   razonSocial: text("razon_social").notNull(),
   rut: text("rut").notNull(),
   sector: text("sector").notNull(),
@@ -35,20 +45,20 @@ export const empresas = sqliteTable("empresas", {
   creadoEn: creadoEn(),
 });
 
-export const usuarios = sqliteTable("usuarios", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
+export const usuarios = pgTable("usuarios", {
+  id: serial("id").primaryKey(),
   email: text("email").notNull().unique(),
   passwordHash: text("password_hash").notNull(),
   nombre: text("nombre").notNull(),
   rol: text("rol", { enum: ROLES }).notNull(),
   especialidad: text("especialidad", { enum: ESPECIALIDADES }),
-  esAdmin: integer("es_admin", { mode: "boolean" }).notNull().default(false),
-  activo: integer("activo", { mode: "boolean" }).notNull().default(true),
+  esAdmin: boolean("es_admin").notNull().default(false),
+  activo: boolean("activo").notNull().default(true),
   empresaId: integer("empresa_id").references(() => empresas.id, { onDelete: "cascade" }),
   creadoEn: creadoEn(),
 });
 
-export const sesiones = sqliteTable("sesiones", {
+export const sesiones = pgTable("sesiones", {
   id: text("id").primaryKey(),
   usuarioId: integer("usuario_id")
     .notNull()
@@ -56,7 +66,7 @@ export const sesiones = sqliteTable("sesiones", {
   expiraEn: fecha("expira_en").notNull(),
 });
 
-export const perfilesCandidato = sqliteTable("perfiles_candidato", {
+export const perfilesCandidato = pgTable("perfiles_candidato", {
   usuarioId: integer("usuario_id")
     .primaryKey()
     .references(() => usuarios.id, { onDelete: "cascade" }),
@@ -73,10 +83,10 @@ export const perfilesCandidato = sqliteTable("perfiles_candidato", {
   actualizadoEn: actualizadoEn(),
 });
 
-export const procesos = sqliteTable(
+export const procesos = pgTable(
   "procesos",
   {
-    id: integer("id").primaryKey({ autoIncrement: true }),
+    id: serial("id").primaryKey(),
     empresaId: integer("empresa_id")
       .notNull()
       .references(() => empresas.id, { onDelete: "cascade" }),
@@ -90,16 +100,16 @@ export const procesos = sqliteTable(
     ubicacion: text("ubicacion").notNull(),
     vacantes: integer("vacantes").notNull().default(1),
     estado: text("estado", { enum: ESTADOS_PROCESO }).notNull().default("borrador"),
-    mostrarEmpresa: integer("mostrar_empresa", { mode: "boolean" }).notNull().default(false),
+    mostrarEmpresa: boolean("mostrar_empresa").notNull().default(false),
     creadoEn: creadoEn(),
   },
   (t) => [index("procesos_empresa_idx").on(t.empresaId)],
 );
 
-export const postulaciones = sqliteTable(
+export const postulaciones = pgTable(
   "postulaciones",
   {
-    id: integer("id").primaryKey({ autoIncrement: true }),
+    id: serial("id").primaryKey(),
     procesoId: integer("proceso_id")
       .notNull()
       .references(() => procesos.id, { onDelete: "cascade" }),
@@ -121,10 +131,10 @@ export const postulaciones = sqliteTable(
   ],
 );
 
-export const evaluaciones = sqliteTable(
+export const evaluaciones = pgTable(
   "evaluaciones",
   {
-    id: integer("id").primaryKey({ autoIncrement: true }),
+    id: serial("id").primaryKey(),
     candidatoId: integer("candidato_id")
       .notNull()
       .references(() => usuarios.id, { onDelete: "cascade" }),
@@ -133,8 +143,8 @@ export const evaluaciones = sqliteTable(
     asignadaPorId: integer("asignada_por_id").references(() => usuarios.id, {
       onDelete: "set null",
     }),
-    respuestas: text("respuestas", { mode: "json" }).$type<unknown>(),
-    resultado: text("resultado", { mode: "json" }).$type<ResultadoEvaluacion>(),
+    respuestas: jsonb("respuestas").$type<unknown>(),
+    resultado: jsonb("resultado").$type<ResultadoEvaluacion>(),
     iniciadaEn: fecha("iniciada_en"),
     completadaEn: fecha("completada_en"),
     creadoEn: creadoEn(),
@@ -142,10 +152,10 @@ export const evaluaciones = sqliteTable(
   (t) => [index("evaluaciones_candidato_idx").on(t.candidatoId)],
 );
 
-export const solicitudes = sqliteTable(
+export const solicitudes = pgTable(
   "solicitudes",
   {
-    id: integer("id").primaryKey({ autoIncrement: true }),
+    id: serial("id").primaryKey(),
     empresaId: integer("empresa_id")
       .notNull()
       .references(() => empresas.id, { onDelete: "cascade" }),
@@ -163,10 +173,10 @@ export const solicitudes = sqliteTable(
   (t) => [index("solicitudes_empresa_idx").on(t.empresaId)],
 );
 
-export const mensajes = sqliteTable(
+export const mensajes = pgTable(
   "mensajes",
   {
-    id: integer("id").primaryKey({ autoIncrement: true }),
+    id: serial("id").primaryKey(),
     solicitudId: integer("solicitud_id")
       .notNull()
       .references(() => solicitudes.id, { onDelete: "cascade" }),
@@ -179,10 +189,10 @@ export const mensajes = sqliteTable(
   (t) => [index("mensajes_solicitud_idx").on(t.solicitudId)],
 );
 
-export const citas = sqliteTable(
+export const citas = pgTable(
   "citas",
   {
-    id: integer("id").primaryKey({ autoIncrement: true }),
+    id: serial("id").primaryKey(),
     tipo: text("tipo", { enum: TIPOS_CITA }).notNull(),
     titulo: text("titulo").notNull(),
     inicio: fecha("inicio").notNull(),

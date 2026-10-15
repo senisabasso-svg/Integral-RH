@@ -1,13 +1,15 @@
-import { mkdirSync } from "node:fs";
-import { createClient, type Client } from "@libsql/client";
-import { drizzle } from "drizzle-orm/libsql";
+import { drizzle } from "drizzle-orm/node-postgres";
+import { Pool } from "pg";
 
-const url = process.env.DATABASE_URL ?? "file:data/integral-rh.db";
+const url = process.env.DATABASE_URL;
+if (!url) {
+  throw new Error(
+    "Falta DATABASE_URL. Ejemplo: postgresql://postgres:postgres@localhost:5432/integral_rh",
+  );
+}
 
-if (url.startsWith("file:")) mkdirSync("data", { recursive: true });
+const globalConDb = globalThis as unknown as { poolPg?: Pool };
+const pool = globalConDb.poolPg ?? new Pool({ connectionString: url });
+if (process.env.NODE_ENV !== "production") globalConDb.poolPg = pool;
 
-const globalConDb = globalThis as unknown as { clienteDb?: Client };
-const cliente = globalConDb.clienteDb ?? createClient({ url });
-if (process.env.NODE_ENV !== "production") globalConDb.clienteDb = cliente;
-
-export const db = drizzle(cliente);
+export const db = drizzle(pool);

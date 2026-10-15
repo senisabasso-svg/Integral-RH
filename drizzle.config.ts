@@ -1,8 +1,15 @@
+import "dotenv/config";
 import { defineConfig } from "drizzle-kit";
 
+if (!process.env.DATABASE_URL) {
+  throw new Error(
+    "Falta DATABASE_URL. Ejemplo: postgresql://postgres:postgres@localhost:5432/integral_rh",
+  );
+}
+
 export default defineConfig({
-  dialect: "turso",
+  dialect: "postgresql",
   schema: "./src/db/schema.ts",
   out: "./drizzle",
-  dbCredentials: { url: process.env.DATABASE_URL ?? "file:data/integral-rh.db" },
+  dbCredentials: { url: process.env.DATABASE_URL },
 });

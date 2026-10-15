@@ -8,16 +8,17 @@ Plataforma integral de recursos humanos con tres portales sobre una misma base d
 - **Candidatos** (`/candidato`): arman su perfil, suben su CV, se postulan en la bolsa de empleos pública (`/empleos`) y completan las evaluaciones que se les asignan.
 - **Staff de Impulso Humano** (`/staff`): gestiona empresas, candidatos, procesos de selección (pipeline por etapas), solicitudes de servicio, agenda y equipo.
 
-Hecho con Next.js 16, TypeScript, Tailwind CSS 4 y SQLite (Drizzle ORM + libSQL).
+Hecho con Next.js 16, TypeScript, Tailwind CSS 4 y PostgreSQL (Drizzle ORM).
 
 ## Puesta en marcha
 
-Requiere Node.js 22 o superior.
+Requiere Node.js 22 o superior y PostgreSQL en marcha.
 
 ```bash
+cp .env.example .env   # ajustá DATABASE_URL a tu Postgres local
 npm install
-npm run db:reset   # crea la base en data/ y carga datos de demostración
-npm run dev        # http://localhost:3000
+npm run db:reset       # aplica el esquema y carga datos de demostración
+npm run dev            # http://localhost:3000
 ```
 
 ## Cuentas de demostración
@@ -39,9 +40,9 @@ Todas usan la contraseña `demo1234`.
 | `npm run dev` | Servidor de desarrollo |
 | `npm run build` / `npm start` | Build y servidor de producción |
 | `npm run lint` / `npm run typecheck` | Revisión de código y de tipos |
-| `npm run db:push` | Aplica el esquema (`src/db/schema.ts`) a la base |
-| `npm run db:seed` | Reemplaza los datos por los de demostración |
-| `npm run db:reset` | Borra la base, la recrea y carga la demostración |
+| `npm run db:push` | Aplica el esquema (`src/db/schema.ts`) a Postgres |
+| `npm run db:seed` | Vacía las tablas y carga los datos de demostración |
+| `npm run db:reset` | Aplica el esquema y carga la demostración |
 | `npm run db:studio` | Explorador visual de la base (Drizzle Studio) |
 
 ## Estructura
@@ -76,7 +77,7 @@ Los tests DISC (24 grupos de adjetivos) y de razonamiento (30 preguntas en 25 mi
 
 ## Para publicarlo
 
-- **Base de datos:** cambiar `DATABASE_URL` por una base en la nube (por ejemplo Turso, compatible con el código actual).
+- **Base de datos:** un Postgres gestionado (por ejemplo el plugin Postgres de Railway) y `DATABASE_URL` apuntando a esa instancia. El deploy actual con SQLite + Volume **no** es compatible con este código.
 - **CV:** usar un almacenamiento persistente para `storage/cv` (disco del servidor o un servicio de archivos).
 - **Cuentas demo:** el cuadro con las cuentas de demostración del login solo aparece en desarrollo, o en producción si se define `MOSTRAR_DEMO=1`.
 
